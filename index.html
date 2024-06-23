@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>stakiran研究所のページをランダムに開くボタン</title>
+  <style>
+    /* ボタンを全画面に最大化表示するためのスタイル */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      width: 100%;
+      height: 100%;
+      font-size: 2rem;
+    }
+  </style>
+  <script type="text/javascript">
+    function loadUrlsAndOpenRandom() {
+      // script タグを動的に挿入して sta.json.urls.js を読み込む
+      const script = document.createElement('script');
+      script.src = 'sta.json.urls.js';
+
+      script.onload = function() {
+        // urls 配列が読み込まれた後にランダムなURLを選択して新しいタブで開く
+        if (Array.isArray(urls) && urls.length > 0) {
+          const randomIndex = Math.floor(Math.random() * urls.length);
+          const url_randomed = urls[randomIndex];
+          window.open(url_randomed, '_blank');
+        } else {
+          console.error('urls 配列が空です');
+        }
+      };
+
+      script.onerror = function() {
+        console.error('sta.json.urls.js の読み込みに失敗しました');
+      };
+
+      document.head.appendChild(script);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // ボタンを設定
+    document.getElementById('randomUrlButton').addEventListener('click', loadUrlsAndOpenRandom);
+    });
+  </script>
+</head>
+<body>
+  <button id="randomUrlButton">ランダムに一つページを開く</button>
+</body>
+</html>
